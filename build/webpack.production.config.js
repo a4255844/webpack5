@@ -5,6 +5,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin')
+const TerserWebpackPlugin = require('terser-webpack-plugin')
+
 const webpack = require('webpack');
 const WorkboxPlugin = require('workbox-webpack-plugin')
 
@@ -80,7 +82,7 @@ const config = {
       clientsClaim: true,
       skipWaiting: true,
     }),
-    // dll技术: 把第三方库进行预打包,加开生产环境打包速度
+    // dll技术: 把第三方库进行预打包,加快生产环境打包速度
     // 告诉webpack哪些库不参与打包，同时使用时的名称也得变~
     new webpack.DllReferencePlugin({
       manifest: resolve('dll/manifest.json')
@@ -101,8 +103,25 @@ const config = {
   optimization: {
     splitChunks: {
       chunks: 'all' // 将从node_modules引入的模块和异步加载的模块都拆分单独打包
-    }
+    },
+    // 将当前模块的记录其他模块的hash单独打包为一个文件 runtime
+    // 解决：修改a文件导致b文件的contenthash变化导致缓存失败
+    runtimeChunk: {
+      name: entrypoint => `runtime-${entrypoint.name}`
+    },
+    minimizer: [
+      // 配置生产环境的压缩方案：js和css
+      new TerserWebpackPlugin({
+        // 开启缓存
+        cache: true,
+        // 开启多进程打包
+        parallel: true,
+        // 启动source-map
+        sourceMap: true
+      })
+    ]
   },
+
   /* dll和externals的区别: 使用外部cdn / 使用自己服务器暴露,他们都是提升打包速度 */
   // externals: {
   //   //忽略库名 -- npm包名,通过引入cdn来提升速度
