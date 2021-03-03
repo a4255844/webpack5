@@ -1,5 +1,5 @@
 module.exports = function (api) {
-  api.cache(true);
+  api.cache(true); //缓存处理,提高性能
 
   const presets = [
     [
@@ -11,7 +11,7 @@ module.exports = function (api) {
           "ie": 10,
           "chrome": 67
         },
-        "useBuiltIns": "usage",
+        "useBuiltIns": "usage",  //不用直接引入polyfill, 它会按需引入
         "corejs": 2,
       }
 
