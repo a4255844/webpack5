@@ -9,7 +9,6 @@ import './assets/css/test2.less'
 import './assets/css/test3.styl'
 console.log('hello webpack444!')
 /* eslint-disable no-undef */
-console.log(add(1, 2))
 console.log(add2(3, 4))
 /* 测试ES6==>ES5 */
 new Promise(() => { })
@@ -25,9 +24,7 @@ const $img2 = $('<img>').attr('src', img2).addClass('avatar2')
 const $img3 = $('<img>').attr('src', img2).addClass('avatar3')
 const $div = $('<div></div>').addClass('test')
 const $input = $('<input>').addClass('test2')
-
 $('body').append($img2).append($img3).append($div).append($input)
-console.log($);
 axios({
   url: '/api/user/5',
 }).then(

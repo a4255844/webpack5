@@ -16,7 +16,7 @@ module.exports = {
     jquery: ['jquery'],
   },
   output: {
-    filename: '[name].js',
+    filename: '_dll_[name]_[hash:8].js',
     path: resolve('dll'),
     library: '[name]_[hash]' // 打包的库里面向外暴露出去的内容叫什么名字
   },

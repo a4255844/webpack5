@@ -27,28 +27,32 @@ const config = {
   //模块加载器
   module: {
     rules: [
-
-      // 处理css
       {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,   //单独打包css需替换style-loader 
-          'css-loader',
-          'postcss-loader'
-        ]  //从下往上，从右往左   style(css(css文件))
-      },
+        oneOf: [
 
-      // 处理less
-      {
-        test: /\.less$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
-      },
+          // 处理css
+          {
+            test: /\.css$/,
+            use: [
+              MiniCssExtractPlugin.loader,   //单独打包css需替换style-loader 
+              'css-loader',
+              'postcss-loader'
+            ]  //从下往上，从右往左   style(css(css文件))
+          },
 
-      // 处理styl|stylus
-      {
-        test: /\.styl|stylus$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'stylus-loader']
-      },
+          // 处理less
+          {
+            test: /\.less$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
+          },
+
+          // 处理styl|stylus
+          {
+            test: /\.styl|stylus$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'stylus-loader']
+          },
+        ]
+      }
     ]
   },
   //插件
@@ -89,7 +93,7 @@ const config = {
     }),
     // 将某个文件打包输出去，并在html中自动引入该资源
     new AddAssetHtmlWebpackPlugin({
-      filepath: resolve('dll/jquery.js')
+      filepath: resolve('dll/*.js')
     })
 
   ],

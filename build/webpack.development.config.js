@@ -14,29 +14,32 @@ const config = {
   //模块加载器
   module: {
     rules: [
-
-
-      // 处理css
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader'
-        ]  //从下往上，从右往左   style(css(css文件))
-      },
+        oneOf: [
+          // 处理css
+          {
+            test: /\.css$/,
+            use: [
+              'style-loader',
+              'css-loader',
+              'postcss-loader'
+            ]  //从下往上，从右往左   style(css(css文件))
+          },
 
-      // 处理less
-      {
-        test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
-      },
+          // 处理less
+          {
+            test: /\.less$/,
+            use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
+          },
 
-      // 处理styl|stylus
-      {
-        test: /\.styl|stylus$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'stylus-loader']
-      },
+          // 处理styl|stylus
+          {
+            test: /\.styl|stylus$/,
+            use: ['style-loader', 'css-loader', 'postcss-loader', 'stylus-loader']
+          },
+        ]
+      }
+
     ]
   },
   //插件
