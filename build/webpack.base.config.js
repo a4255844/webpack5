@@ -48,7 +48,7 @@ module.exports = {
         oneOf: [
           //处理图片
           {
-            test: /\.(png|jpe?g|gif)$/,
+            test: /\.(png|jpe?g|gif|svg)$/,
             use: [
               {
                 loader: 'url-loader',
@@ -58,22 +58,26 @@ module.exports = {
                   name: 'img/[hash:8].[ext]' //name哈希变化
                 },
               },
-              //压缩图片
-              // {
-              //   loader: 'image-webpack-loader',
-              //   options: {
-              //     // 压缩 jpg/jpeg 图片
-              //     mozjpeg: {
-              //       progressive: true,
-              //       quality: 65 // 压缩率
-              //     },
-              //     // 压缩 png 图片
-              //     pngquant: {
-              //       quality: [0.65, 0.90],
-              //       speed: 4
-              //     }
-              //   }
-              // },
+              // 用 img-loader 压缩图片
+              {
+                loader: "img-loader",
+                options: {
+                  plugins: [
+                    require("imagemin-pngquant")({
+                      //压缩 png 的插件
+                      speed: 4, // 取值范围 1-11  值越大压缩率越小 ，值越小压缩生成的文件越小 默认为4
+                    }),
+                    require("imagemin-gifsicle")({
+                      // 压缩 gif 插件
+                      optimizationLevel: 1, // 取值范围 1、2、3 默认1   3极限压缩,压缩和图片效果不好，使用默认1就行
+                    }),
+                    require("imagemin-mozjpeg")({
+                      // 压缩 jpg 插件
+                      quality: 50, // 1-100   值越大压缩率越小 ，值越小压缩生成的文件越小
+                    }),
+                  ],
+                },
+              }
             ]
           },
           //// 处理html文件的img图片（负责引入img，从而能被url-loader进行处理

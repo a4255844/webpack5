@@ -1,1 +1,0 @@
-(self.webpackChunkwebpack_demo2=self.webpackChunkwebpack_demo2||[]).push([[600],{7895:function(e,n){n.add=function(e,n){return e+n+5},n.add2=function(e,n){return e+n}}}]);
