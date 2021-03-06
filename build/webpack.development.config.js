@@ -1,6 +1,7 @@
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { merge } = require('webpack-merge')
+const { merge } = require('webpack-merge');
+const { resolve } = require('./utils');
 const baseConfig = require('./webpack.base.config')
 
 const config = {
@@ -52,13 +53,15 @@ const config = {
     })
   ],
   //映射代码,方便调试
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'inline-source-map',
   //开发服务器
   devServer: {
-    port: 8081,
+    port: 9000,
     open: true,  //自动打开浏览器
     // quiet: true, // 减少打包日志输出
     hot: true,  //热膜替换
+    compress: true,
+    contentBase: resolve('src'),
     //配置代理解决开发环境ajax跨域
     proxy: {
       // 处理以/api开头路径的请求

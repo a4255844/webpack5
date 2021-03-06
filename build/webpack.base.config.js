@@ -59,21 +59,21 @@ module.exports = {
                 },
               },
               //压缩图片
-              {
-                loader: 'image-webpack-loader',
-                options: {
-                  // 压缩 jpg/jpeg 图片
-                  mozjpeg: {
-                    progressive: true,
-                    quality: 65 // 压缩率
-                  },
-                  // 压缩 png 图片
-                  pngquant: {
-                    quality: [0.65, 0.90],
-                    speed: 4
-                  }
-                }
-              },
+              // {
+              //   loader: 'image-webpack-loader',
+              //   options: {
+              //     // 压缩 jpg/jpeg 图片
+              //     mozjpeg: {
+              //       progressive: true,
+              //       quality: 65 // 压缩率
+              //     },
+              //     // 压缩 png 图片
+              //     pngquant: {
+              //       quality: [0.65, 0.90],
+              //       speed: 4
+              //     }
+              //   }
+              // },
             ]
           },
           //// 处理html文件的img图片（负责引入img，从而能被url-loader进行处理

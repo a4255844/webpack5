@@ -2,10 +2,11 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin') //新版需要解构赋值
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const glob = require('glob')
+const PurgeCSSPlugin = require('purgecss-webpack-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin')
-const TerserWebpackPlugin = require('terser-webpack-plugin')
 
 const webpack = require('webpack');
 const WorkboxPlugin = require('workbox-webpack-plugin')
@@ -79,6 +80,10 @@ const config = {
     }),
     //压缩css
     new OptimizeCssAssetsWebpackPlugin(),
+    //去除无用的css代码,必须写在css单独打包后面
+    new PurgeCSSPlugin({
+      paths: glob.sync(`${resolve('src')}/**/*`, { nodir: true }),
+    }),
     // PWA项目离线加载
     new WorkboxPlugin.GenerateSW({
       // 这些选项帮助快速启用 ServiceWorkers
@@ -99,9 +104,9 @@ const config = {
   ],
 
   // source-map调试  
-  // 测试环境 : 'cheap-module-source-map'  
-  // 生产环境 : 'none' //上线后
-  devtool: 'none',
+  // 测试环境 : 'hidden-source-map'  
+  // 生产环境 : 'none'   ==  可省略devtool配置
+  // devtool: 'hidden-source-map',
   //优化配置
   // 使用 SplitChunksPlugin 去重和分离chunk
   optimization: {
@@ -113,17 +118,16 @@ const config = {
     runtimeChunk: {
       name: entrypoint => `runtime-${entrypoint.name}`
     },
-    minimizer: [
-      // 配置生产环境的压缩方案：js和css
-      new TerserWebpackPlugin({
-        // 开启缓存
-        cache: true,
-        // 开启多进程打包
-        parallel: true,
-        // 启动source-map
-        sourceMap: true
-      })
-    ]
+    // minimizer: [
+    //   // 配置生产环境的压缩方案：js和css webpack5默认已集成,不需要安装
+    //   new TerserWebpackPlugin({
+    //     // 开启缓存
+    //     cache: true,
+    //     // 开启多进程打包
+    //     parallel: true,
+    //     // 启动source-map
+    //   })
+    // ]
   },
 
   /* dll和externals的区别: 使用外部cdn / 使用自己服务器暴露,他们都是提升打包速度 */

@@ -1,3 +1,3 @@
-export function add2(a, b) {
-  return a + b
-}
+import { add2 } from './math.js'
+console.log(add2);
+export default add2

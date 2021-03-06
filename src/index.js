@@ -1,6 +1,6 @@
 // import "@babel/polyfill"
 import axios from 'axios'
-import { add2 } from './math2'
+import { add2 } from './math'
 // const { add } = require('./math')
 import $ from 'jquery'
 import img2 from './assets/imgs/u=3584292853,440103369&fm=26&gp=0.jpg'
@@ -11,6 +11,7 @@ console.log('hello webpack444!')
 /* eslint-disable no-undef */
 console.log(add2(3, 4))
 /* 测试ES6==>ES5 */
+
 new Promise(() => { })
 const fn = () => {
   console.log("fn()")
